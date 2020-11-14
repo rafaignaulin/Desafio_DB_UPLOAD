@@ -18,8 +18,8 @@ class ImportTransactionsService {
   async execute(filePath: string): Promise<Transaction[]> {
     const transactionRepository = getCustomRepository(TransactionsRepository);
     const categoriesRepository = getRepository(Category);
-    const contactReadStream = fs.createReadStream(filePath);
 
+    const contactReadStream = fs.createReadStream(filePath);
     const parsers = csvParse({
       from_line: 2,
     });
@@ -30,7 +30,7 @@ class ImportTransactionsService {
     const categories: string[] = [];
 
     parseCSV.on('data', async line => {
-      const { title, type, value, category } = line.map((cell: string) =>
+      const [title, type, value, category] = line.map((cell: string) =>
         cell.trim(),
       );
 
